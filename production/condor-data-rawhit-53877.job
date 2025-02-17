@@ -38,21 +38,21 @@ Rank=CPU_Speed
 
 # Used to give jobs a directory with respect to file input 
 # and output.
-Initialdir     = /sphenix/u/xyu3/workarea/PhotonConv/KsNew/background_shape/KshortReconstruction/likesign
+Initialdir     = /gpfs/mnt/gpfs02/sphenix/user/xyu3/KsReco_sPHENIX/production
 
 # The executable we want to run.
-Executable     = $(Initialdir)/run_ks.sh
+Executable     = $(Initialdir)/run_rawhitdst.sh
 
-Nevent         = 500
-RunNumber      = 53744
-FileName       = clusters_seeds_$(RunNumber)-$(Segment)-$(Index).root_dst.root
-FilePath       = /sphenix/u/xyu3/hftg01/Full_track_DST/Reconstructed/$(RunNumber)/
-OutPrefix      = $(Initialdir)/root/clusters_seeds
-StepSize       = 0
+Nevent         = 2000
+RunNumber      = 53877
+FileList       = $(Initialdir)/filelist/$(RunNumber)/rawhit_$INT(Segment,%05d).list
+OutDir         = /sphenix/u/xyu3/hftg01/Full_track_DST/
+OutPrefix      = clusters_seeds
+StepSize       = 2000
 
 # The argument to pass to the executable.
 #tracking firt then calo, only one tracking file
-Arguments      = "$(Nevent) $(FileName) $(FilePath) $(OutPrefix) $(RunNumber) $(Segment) $(Index) $(StepSize)"
+Arguments      = "$(Nevent) $(RunNumber) $(Segment) $(FileList) $(OutDir) $(OutPrefix) $(Index) $(StepSize)"
 
 # The job's stdout is sent to this file.
 Output         = $(Initialdir)/log/job-Data-$(RunNumber).$(Segment).$(Index).$(Cluster).$(Process).out
@@ -76,5 +76,4 @@ concurrency_limits=CONCURRENCY_LIMIT_DEFAULT:1000
 # job.  If a number is placed after the command (i.e. Queue 15)
 # then the job will be submitted N times.  Use the $(Process)
 # macro to make your input/output and log files unique.
-#Queue 7
 Queue Segment Index from $(Initialdir)/$(RunNumber)_seg_id.txt

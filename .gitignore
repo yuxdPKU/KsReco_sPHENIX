@@ -29,6 +29,16 @@ log
 #root
 *.root
 
+#previous analysis
+background_shape
+
+#log file
+log*
+
+#plot
+figure
+*.pdf
+
 #file list
 filelist
 *.list

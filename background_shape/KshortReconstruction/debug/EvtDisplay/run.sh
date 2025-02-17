@@ -1,8 +1,0 @@
-#root -b -q EvtDisplay2D.C'(53744,6,12,41)' && root -b -q EvtDisplay2D_zoomin.C'(53744,6,12,41)'
-#root -b -q EvtDisplay2D.C'(53744,7,53,61)' && root -b -q EvtDisplay2D_zoomin.C'(53744,7,53,61)'
-#root -b -q EvtDisplay2D.C'(53744,8,26,44)' && root -b -q EvtDisplay2D_zoomin.C'(53744,8,26,44)'
-#root -b -q EvtDisplay2D.C'(53744,17,4,85)' && root -b -q EvtDisplay2D_zoomin.C'(53744,17,4,85)'
-#root -b -q EvtDisplay2D.C'(53744,17,5,65)' && root -b -q EvtDisplay2D_zoomin.C'(53744,17,5,65)'
-#root -b -q EvtDisplay2D.C'(53744,25,7,92)' && root -b -q EvtDisplay2D_zoomin.C'(53744,25,7,92)'
-#root -b -q EvtDisplay2D.C'(53744,42,13,30)' && root -b -q EvtDisplay2D_zoomin.C'(53744,42,13,30)'
-root -b -q EvtDisplay2D.C'(53744,49,0,10)' && root -b -q EvtDisplay2D_zoomin.C'(53744,49,0,10)'
