@@ -124,6 +124,7 @@ int KFParticle_sPHENIX::InitRun(PHCompositeNode *topNode)
 
 int KFParticle_sPHENIX::process_event(PHCompositeNode *topNode)
 {
+  
   std::vector<KFParticle> mother, vertex_kfparticle;
   std::vector<std::vector<KFParticle>> daughters, intermediates;
   int nPVs, multiplicity;
@@ -186,10 +187,12 @@ int KFParticle_sPHENIX::process_event(PHCompositeNode *topNode)
     vertex_kfparticle = mother;
   }
 
+  if (Verbosity() > 2) std::cout<<"KFP - candidate size = "<<mother.size()<<std::endl;
   if (mother.size() != 0)
   {
     for (unsigned int i = 0; i < mother.size(); ++i)
     {
+      
       if (m_save_output && getCandidateCounter() == 0)
       {
         m_outfile = new TFile(m_outfile_name.c_str(), "RECREATE");

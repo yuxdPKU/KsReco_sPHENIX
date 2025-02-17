@@ -43,12 +43,12 @@ Initialdir     = /gpfs/mnt/gpfs02/sphenix/user/xyu3/KsReco_sPHENIX/production
 # The executable we want to run.
 Executable     = $(Initialdir)/run_rawhitdst.sh
 
-Nevent         = 500
-RunNumber      = 53744
+Nevent         = 2000
+RunNumber      = 53534
 FileList       = $(Initialdir)/filelist/$(RunNumber)/rawhit_$INT(Segment,%05d).list
 OutDir         = /sphenix/u/xyu3/hftg01/Full_track_DST/
 OutPrefix      = clusters_seeds
-StepSize       = 500
+StepSize       = 2000
 
 # The argument to pass to the executable.
 #tracking firt then calo, only one tracking file

@@ -1,0 +1,24 @@
+   ------------------------------------------------------------------
+  | Welcome to ROOT 6.32.06                        https://root.cern |
+  | (c) 1995-2024, The ROOT Team; conception: R. Brun, F. Rademakers |
+  | Built for linuxx8664gcc on Dec 13 2024, 17:23:48                 |
+  | From tags/6-32-06@6-32-06                                        |
+  | With g++ (GCC) 14.2.0                                            |
+  | Try '.help'/'.?', '.demo', '.license', '.credits', '.quit'/'.q'  |
+   ------------------------------------------------------------------
+
+
+Processing plot_kshorts_kfp.C...
+fg 350788 bgd 280219 net signal 70569
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      65.0873
+NDf                       =           56
+Edm                       =  7.58329e-06
+NCalls                    =          214
+p0                        =      1251.68   +/-   21.7861     
+p1                        =      2644.56   +/-   65.0009     
+p2                        =     0.489156   +/-   0.0003613   
+p3                        =    0.0135531   +/-   0.000419728 
+ fit signal integral 26950.2
+ fit background integral 41305.4

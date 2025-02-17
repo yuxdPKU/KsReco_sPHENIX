@@ -14,6 +14,7 @@ cdbtag='nocdbtag'
 version='v001'
 
 path=/sphenix/lustre01/sphnxpro/production/${runspecies}/${runtype}/${anabuild}_${cdbtag}_${version}
+echo Searching in ${path}
 
 #53877 - 400khz
 #53876 - 430khz
@@ -21,10 +22,12 @@ path=/sphenix/lustre01/sphnxpro/production/${runspecies}/${runtype}/${anabuild}_
 #53744 - 300khz
 #53630 - 550khz
 #53534 - 250khz
-runs=(53744)
+#runs=(53744)
+#runs=(53756)
+runs=(53534 53630 53744 53756 53876 53877)
 
 NumEvtPerDst=10000
-NumEvtPerJob=500
+NumEvtPerJob=2000
 NumJobPerDst=$((${NumEvtPerDst} / ${NumEvtPerJob}))
 
 for ((k=0; k<${#runs[@]}; k++))
@@ -40,7 +43,46 @@ do
   result_arr=($result)
   numlower=${result_arr[0]}
   numupper=${result_arr[1]}
-  nseg=`ls ${path}/DST_STREAMING_EVENT_INTT0/run_000${numlower}_000${numupper}/dst/*${runs[$k]}* | wc -l`
+
+  nseg=100000000
+
+  subsystem='INTT'
+  for ((server=0; server<8; server++))
+  do
+    nsegtemp=`ls ${path}/DST_STREAMING_EVENT_${subsystem}${server}/run_000${numlower}_000${numupper}/dst/*${runs[$k]}* | wc -l`
+    echo run ${runs[$k]} ${subsystem}${server} raw hit DST ${nsegtemp} segments
+    if [ $nseg -gt $nsegtemp ]; then
+      nseg=$nsegtemp
+    fi
+  done
+
+  subsystem='MVTX'
+  for ((felix=0; felix<6; felix++))
+  do
+    nsegtemp=`ls ${path}/DST_STREAMING_EVENT_${subsystem}${felix}/run_000${numlower}_000${numupper}/dst/*${runs[$k]}* | wc -l`
+    echo run ${runs[$k]} ${subsystem}${felix} raw hit DST ${nsegtemp} segments
+    if [ $nseg -gt $nsegtemp ]; then
+      nseg=$nsegtemp
+    fi
+  done
+
+  subsystem='TPC'
+  for ((i=0; i<24; i++))
+  do
+    ebdc=$(printf "%02d" $i)
+    nsegtemp=`ls ${path}/DST_STREAMING_EVENT_${subsystem}${ebdc}/run_000${numlower}_000${numupper}/dst/*${runs[$k]}* | wc -l`
+    echo run ${runs[$k]} ${subsystem}${ebdc} raw hit DST ${nsegtemp} segments
+    if [ $nseg -gt $nsegtemp ]; then
+      nseg=$nsegtemp
+    fi
+  done
+
+  subsystem='TPOT'
+  nsegtemp=`ls ${path}/DST_STREAMING_EVENT_${subsystem}/run_000${numlower}_000${numupper}/dst/*${runs[$k]}* | wc -l`
+  echo run ${runs[$k]} ${subsystem} raw hit DST ${nsegtemp} segments
+  if [ $nseg -gt $nsegtemp ]; then
+    nseg=$nsegtemp
+  fi
 
   for ((j=0; j<${nseg}; j++))
   do

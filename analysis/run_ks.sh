@@ -4,8 +4,7 @@ source /opt/sphenix/core/bin/sphenix_setup.sh -n new  # setup sPHENIX environmen
 
 # Additional commands for my local environment
 export SPHENIX=/sphenix/u/xyu3
-#export MYINSTALL=$SPHENIX/install
-export MYINSTALL=/sphenix/u/xyu3/workarea/KsReco_sPHENIX/install
+export MYINSTALL=$SPHENIX/install
 
 # Setup MYINSTALL to local directory and run sPHENIX setup local script
 # to adjust PATH, LD LIBRARY PATH, ROOT INCLUDE PATH, etc
@@ -22,10 +21,11 @@ nEvents=$1
 InDst=$2
 InPath=$3
 OutPrefix=$4
-RunNumber=$5
-Segment=$6
-Index=$7
-StepSize=$8
+OutPath=$5
+RunNumber=$6
+Segment=$7
+Index=$8
+StepSize=$9
 
-root.exe -q -b Fun4All_FullReconstruction_Ks.C\($nEvents,\"${InDst}\",\"${InPath}\",\"${OutPrefix}\",$RunNumber,$Segment,$Index,$StepSize\)
+root.exe -q -b Fun4All_FullReconstruction_Ks.C\($nEvents,\"${InDst}\",\"${InPath}\",\"${OutPrefix}\",\"${OutPath}\",$RunNumber,$Segment,$Index,$StepSize\)
 echo Script done

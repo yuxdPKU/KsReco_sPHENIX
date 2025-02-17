@@ -47,12 +47,13 @@ Nevent         = 500
 RunNumber      = 53744
 FileName       = clusters_seeds_$(RunNumber)-$(Segment)-$(Index).root_dst.root
 FilePath       = /sphenix/u/xyu3/hftg01/Full_track_DST/Reconstructed/$(RunNumber)/
-OutPrefix      = $(Initialdir)/root/clusters_seeds
+OutPrefix      = clusters_seeds
+OutPath        = $(Initialdir)
 StepSize       = 0
 
 # The argument to pass to the executable.
 #tracking firt then calo, only one tracking file
-Arguments      = "$(Nevent) $(FileName) $(FilePath) $(OutPrefix) $(RunNumber) $(Segment) $(Index) $(StepSize)"
+Arguments      = "$(Nevent) $(FileName) $(FilePath) $(OutPrefix) $(OutPath) $(RunNumber) $(Segment) $(Index) $(StepSize)"
 
 # The job's stdout is sent to this file.
 Output         = $(Initialdir)/log/job-Data-$(RunNumber).$(Segment).$(Index).$(Cluster).$(Process).out

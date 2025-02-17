@@ -98,7 +98,7 @@ void Fun4All_FullReconstruction(
   std::string theOutfile = outfile.Data();
 
   auto se = Fun4AllServer::instance();
-  se->Verbosity(2);
+  se->Verbosity(1);
   auto rc = recoConsts::instance();
   
   //input manager for QM production raw hit DST file
@@ -199,7 +199,7 @@ void Fun4All_FullReconstruction(
   int verbosity = std::max(Enable::VERBOSITY, Enable::MVTX_VERBOSITY);
   mvtxclusterizer->Verbosity(verbosity);
   se->registerSubsystem(mvtxclusterizer);
-  
+
   Intt_Clustering();
 
   Tpc_LaserEventIdentifying();
@@ -269,6 +269,7 @@ void Fun4All_FullReconstruction(
   seeder->SetMinHitsPerCluster(0);
   seeder->SetMinClustersPerTrack(3);
   seeder->useFixedClusterError(true);
+  seeder->reject_zsize1_clusters(true);
   seeder->set_pp_mode(true);
   se->registerSubsystem(seeder);
 
@@ -312,6 +313,7 @@ void Fun4All_FullReconstruction(
   // Match TPC track stubs from CA seeder to clusters in the micromegas layers
   auto mm_match = new PHMicromegasTpcTrackMatching;
   mm_match->Verbosity(0);
+  mm_match->set_pp_mode(TRACKING::pp_mode);
   mm_match->set_rphi_search_window_lyr1(3.);
   mm_match->set_rphi_search_window_lyr2(15.0);
   mm_match->set_z_search_window_lyr1(30.0);
@@ -401,11 +403,10 @@ void Fun4All_FullReconstruction(
   out->AddNode("Sync");
   out->AddNode("EventHeader");
   out->AddNode("TRKR_CLUSTER");
-  out->AddNode("TRKR_CLUSTERCROSSINGASSOC");
-  out->AddNode("LaserEventInfo");
-  out->AddNode("SiliconTrackSeedContainer");
-  out->AddNode("TpcTrackSeedContainer");
-  out->AddNode("SvtxTrackSeedContainer");
+  //out->AddNode("TRKR_CLUSTERCROSSINGASSOC");
+  //out->AddNode("SiliconTrackSeedContainer");
+  //out->AddNode("TpcTrackSeedContainer");
+  //out->AddNode("SvtxTrackSeedContainer");
   out->AddNode("SvtxTrackMap");
   out->AddNode("SvtxVertexMap");
   se->registerOutputManager(out);

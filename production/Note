@@ -1,0 +1,13 @@
+Run 53756:
+  submitted at Feb. 14
+  TPC21 only has 458 segments, TPC22 only has 729 segments, other EBDC has 1346 segments
+  so only 458 segments Track DST are produced
+Run 53744:
+  submitted at Feb. 09
+  300 raw hit DSTs are used
+Run 53534:
+  submitted at Feb. 16
+  first 366 segments are used, total segments 1045
+Run 53876:
+  submitted at Feb. 16
+  first 355 segments are used, total segments 2484

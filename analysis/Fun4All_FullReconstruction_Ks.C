@@ -75,7 +75,8 @@ void Fun4All_FullReconstruction_Ks(
     const int nEvents = 10,
     const std::string tpcfilename = "DST_STREAMING_EVENT_run2pp_new_2024p002-00053222-00000.root",
     const std::string tpcdir = "/sphenix/lustre01/sphnxpro/physics/slurp/streaming/physics/new_2024p002/run_00053200_00053300/",
-    const std::string outfilename = "root/clusters_seeds",
+    const std::string outfilename = "clusters_seeds",
+    const std::string outdir = "./root",
     const int runnumber = 53222,
     const int segment = 0,
     const int index = 0,
@@ -88,11 +89,15 @@ void Fun4All_FullReconstruction_Ks(
   //int runnumber = runseg.first;
   //int segment = runseg.second;
 
-  TString outfile = outfilename + "_" + runnumber + "-" + segment + "-" + index + ".root";
+  string outDir = outdir + "/inReconstruction/" + to_string(runnumber) + "/";
+  string makeDirectory = "mkdir -p " + outDir;
+  system(makeDirectory.c_str());
+  TString outfile = outDir + outfilename + "_" + runnumber + "-" + segment + "-" + index + ".root";
   std::cout<<"outfile "<<outfile<<std::endl;
   std::string theOutfile = outfile.Data();
+
   auto se = Fun4AllServer::instance();
-  se->Verbosity(0);
+  se->Verbosity(1);
   auto rc = recoConsts::instance();
   rc->set_IntFlag("RUNNUMBER", runnumber);
   rc->set_IntFlag("RUNSEGMENT", segment);
@@ -141,6 +146,61 @@ void Fun4All_FullReconstruction_Ks(
   se->End();
   se->PrintTimer();
 
+  ifstream file_ksreco(ksstring.c_str(), ios::binary | ios::ate);
+  if (file_ksreco.good() && (file_ksreco.tellg() > 100))
+  {
+    string outputDirMove = outdir + "/Reconstructed/" + to_string(runnumber) + "/";
+    string makeDirectoryMove = "mkdir -p " + outputDirMove;
+    system(makeDirectoryMove.c_str());
+    string moveOutput = "mv " + ksstring + " " + outputDirMove;
+    std::cout << "moveOutput: " << moveOutput << std::endl;
+    system(moveOutput.c_str());
+  }
+
+  ifstream file_ks_kfp_likesign(ks_kfp_likesign_string.c_str(), ios::binary | ios::ate);
+  if (file_ks_kfp_likesign.good() && (file_ks_kfp_likesign.tellg() > 100))
+  {
+    string outputDirMove = outdir + "/Reconstructed/" + to_string(runnumber) + "/";
+    string makeDirectoryMove = "mkdir -p " + outputDirMove;
+    system(makeDirectoryMove.c_str());
+    string moveOutput = "mv " + ks_kfp_likesign_string + " " + outputDirMove;
+    std::cout << "moveOutput: " << moveOutput << std::endl;
+    system(moveOutput.c_str());
+  }
+
+  ifstream file_ks_kfp_unlikesign(ks_kfp_unlikesign_string.c_str(), ios::binary | ios::ate);
+  if (file_ks_kfp_unlikesign.good() && (file_ks_kfp_unlikesign.tellg() > 100))
+  {
+    string outputDirMove = outdir + "/Reconstructed/" + to_string(runnumber) + "/";
+    string makeDirectoryMove = "mkdir -p " + outputDirMove;
+    system(makeDirectoryMove.c_str());
+    string moveOutput = "mv " + ks_kfp_unlikesign_string + " " + outputDirMove;
+    std::cout << "moveOutput: " << moveOutput << std::endl;
+    system(moveOutput.c_str());
+  }
+
+  ifstream file_D0_kfp_likesign(D0_kfp_likesign_string.c_str(), ios::binary | ios::ate);
+  if (file_D0_kfp_likesign.good() && (file_D0_kfp_likesign.tellg() > 100))
+  {
+    string outputDirMove = outdir + "/Reconstructed/" + to_string(runnumber) + "/";
+    string makeDirectoryMove = "mkdir -p " + outputDirMove;
+    system(makeDirectoryMove.c_str());
+    string moveOutput = "mv " + D0_kfp_likesign_string + " " + outputDirMove;
+    std::cout << "moveOutput: " << moveOutput << std::endl;
+    system(moveOutput.c_str());
+  }
+
+  ifstream file_D0_kfp_unlikesign(D0_kfp_unlikesign_string.c_str(), ios::binary | ios::ate);
+  if (file_D0_kfp_unlikesign.good() && (file_D0_kfp_unlikesign.tellg() > 100))
+  {
+    string outputDirMove = outdir + "/Reconstructed/" + to_string(runnumber) + "/";
+    string makeDirectoryMove = "mkdir -p " + outputDirMove;
+    system(makeDirectoryMove.c_str());
+    string moveOutput = "mv " + D0_kfp_unlikesign_string + " " + outputDirMove;
+    std::cout << "moveOutput: " << moveOutput << std::endl;
+    system(moveOutput.c_str());
+  }
+
   delete se;
   std::cout << "Finished" << std::endl;
   gSystem->Exit(0);
@@ -153,6 +213,7 @@ void KsReco(std::string outfile = "KsReco.root")
   kshort->Verbosity(0);
   kshort->setTrackQualityCut(1000);
   kshort->setPtCut(0.2);
+  kshort->setTrackPtCut(0.2);
   kshort->setPairDCACut(5.0);
   kshort->setRequireMVTX(true);
   kshort->setTrackDCACut(0.0);  // requires fabs(dca) > this
@@ -186,7 +247,7 @@ void KFPReco_Ks(std::string module_name = "myKShortReco", std::string decaydescr
   kfparticle->setMinMVTXhits(0);
   //kfparticle->setMinTPChits(20);
   kfparticle->setMinTPChits(0);
-  kfparticle->setMinimumTrackPT(-1.);
+  kfparticle->setMinimumTrackPT(0.2);
   kfparticle->setMaximumTrackPTchi2(FLT_MAX);
   kfparticle->setMinimumTrackIPchi2(-1.);
   kfparticle->setMinimumTrackIP(-1.);
@@ -237,7 +298,7 @@ void KFPReco_D0(std::string module_name = "myD0Reco", std::string decaydescripto
   kfparticle->setMinMVTXhits(0);
   //kfparticle->setMinTPChits(20);
   kfparticle->setMinTPChits(0);
-  kfparticle->setMinimumTrackPT(-1.);
+  kfparticle->setMinimumTrackPT(0.2);
   kfparticle->setMaximumTrackPTchi2(FLT_MAX);
   kfparticle->setMinimumTrackIPchi2(-1.);
   kfparticle->setMinimumTrackIP(-1.);
